@@ -1,0 +1,64 @@
+site_name: Velox Linux Handbook
+site_description: Official handbook for Velox Linux — user guide, Arch basics, and developer docs
+site_author: The Linux Tube
+site_url: https://thelinutubetltos.github.io/velox-docs/
+repo_url: https://github.com/thelinutubetltos/velox-iso
+repo_name: velox-iso
+
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: custom
+    accent: custom
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+  icon:
+    repo: fontawesome/brands/github
+
+extra_css:
+  - assets/velox.css
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/thelinutubetltos
+    - icon: fontawesome/brands/youtube
+      link: https://youtube.com/@TheLinuxTube
+
+nav:
+  - Home: index.md
+  - User Guide:
+    - user-guide/index.md
+    - First Steps: user-guide/first-steps.md
+    - Package Management: user-guide/packages.md
+    - Display & Resolution: user-guide/display.md
+    - NVIDIA Drivers: user-guide/nvidia.md
+    - KDE Customization: user-guide/kde.md
+    - Snapshots: user-guide/snapshots.md
+    - System Updates: user-guide/updates.md
+    - Troubleshooting: user-guide/troubleshooting.md
+  - Arch Basics:
+    - arch-basics/index.md
+    - What is Arch Linux: arch-basics/what-is-arch.md
+    - pacman Cheat Sheet: arch-basics/pacman.md
+    - The AUR: arch-basics/aur.md
+    - systemd Essentials: arch-basics/systemd.md
+    - File System Layout: arch-basics/filesystem.md
+  - Developer Guide:
+    - developer/index.md
+    - Architecture Overview: developer/architecture.md
+    - Build System: developer/build.md
+    - Package Repositories: developer/repos.md
+    - Calamares Installer: developer/calamares.md
+    - Kernel (linux-velox): developer/kernel.md
+    - Release Workflow: developer/release.md
