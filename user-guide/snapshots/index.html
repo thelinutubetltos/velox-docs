@@ -649,10 +649,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#setting-up-snapshots" class="md-nav__link">
+  <a href="#installing-on-btrfs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Setting up snapshots
+        Installing on Btrfs
       
     </span>
   </a>
@@ -693,10 +693,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#rolling-back-from-grub" class="md-nav__link">
+  <a href="#automatic-snapshots" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Rolling back from GRUB
+        Automatic snapshots
       
     </span>
   </a>
@@ -704,10 +704,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#automatic-snapshots" class="md-nav__link">
+  <a href="#rolling-back-from-grub" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Automatic snapshots
+        Rolling back from GRUB
       
     </span>
   </a>
@@ -1291,10 +1291,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#setting-up-snapshots" class="md-nav__link">
+  <a href="#installing-on-btrfs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Setting up snapshots
+        Installing on Btrfs
       
     </span>
   </a>
@@ -1335,10 +1335,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#rolling-back-from-grub" class="md-nav__link">
+  <a href="#automatic-snapshots" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Rolling back from GRUB
+        Automatic snapshots
       
     </span>
   </a>
@@ -1346,10 +1346,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#automatic-snapshots" class="md-nav__link">
+  <a href="#rolling-back-from-grub" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Automatic snapshots
+        Rolling back from GRUB
       
     </span>
   </a>
@@ -1377,15 +1377,45 @@
 
 
 <h1 id="snapshots-with-snapper">Snapshots with Snapper</h1>
-<p>Velox supports Btrfs snapshots via Snapper + grub-btrfs, set up through velox-welcome. This lets you roll back your system to any previous state directly from the GRUB boot menu.</p>
+<p>Velox supports Btrfs snapshots via Snapper. When you install on a Btrfs filesystem, Snapper is configured automatically during installation.</p>
 <p>!!! warning "Btrfs required"
     Snapshots only work if you installed Velox on a <strong>Btrfs</strong> filesystem. If you chose ext4 during installation, this section does not apply.</p>
-<h2 id="setting-up-snapshots">Setting up snapshots</h2>
-<p>In velox-welcome → <strong>Snapshots</strong> tab, click <strong>Set up Snapper</strong>. This:</p>
+<h2 id="installing-on-btrfs">Installing on Btrfs</h2>
+<p>During installation, select <strong>btrfs</strong> as the filesystem in the Calamares partition step. Velox will automatically:</p>
 <ol>
-<li>Installs <code>snapper</code> and <code>grub-btrfs</code></li>
-<li>Creates a Snapper configuration for <code>/</code></li>
-<li>Enables the <code>grub-btrfs</code> service so snapshots appear in GRUB</li>
+<li>
+<p>Create subvolumes with the recommended layout:</p>
+<table>
+<thead>
+<tr>
+<th>Subvolume</th>
+<th>Mountpoint</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@</code></td>
+<td><code>/</code></td>
+</tr>
+<tr>
+<td><code>@home</code></td>
+<td><code>/home</code></td>
+</tr>
+<tr>
+<td><code>@snapshots</code></td>
+<td><code>/.snapshots</code></td>
+</tr>
+<tr>
+<td><code>@log</code></td>
+<td><code>/var/log</code></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p>Install <code>snapper</code> and configure automatic timeline snapshots</p>
+</li>
+<li>Enable <code>snapper-timeline.timer</code> and <code>snapper-cleanup.timer</code></li>
 </ol>
 <h2 id="taking-a-manual-snapshot">Taking a manual snapshot</h2>
 <pre><code class="language-bash">sudo snapper -c root create --description &quot;before update&quot;
@@ -1397,14 +1427,23 @@
 <pre><code class="language-bash"># Roll back to snapshot number 5
 sudo snapper -c root undochange 5..0
 </code></pre>
+<h2 id="automatic-snapshots">Automatic snapshots</h2>
+<p>Snapper is configured to take hourly snapshots and keep the last 5 hourly + 7 daily. Change limits in <code>/etc/snapper/configs/root</code>:</p>
+<pre><code class="language-bash">sudo nano /etc/snapper/configs/root
+</code></pre>
+<p>Key settings:</p>
+<pre><code>TIMELINE_LIMIT_HOURLY=&quot;5&quot;
+TIMELINE_LIMIT_DAILY=&quot;7&quot;
+</code></pre>
 <h2 id="rolling-back-from-grub">Rolling back from GRUB</h2>
-<p>Reboot → in the GRUB menu select <strong>Arch Linux Snapshots</strong> → choose the snapshot you want to boot into → once booted, make the snapshot permanent:</p>
-<pre><code class="language-bash">sudo snapper -c root rollback
+<p>To enable snapshot boot entries in GRUB, install <code>grub-btrfs</code>:</p>
+<pre><code class="language-bash">sudo pacman -S grub-btrfs inotify-tools
+sudo systemctl enable --now grub-btrfs.path
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 </code></pre>
-<h2 id="automatic-snapshots">Automatic snapshots</h2>
-<p>Snapper can take automatic timeline snapshots (hourly, daily, weekly). Enable with:</p>
-<pre><code class="language-bash">sudo systemctl enable --now snapper-timeline.timer snapper-cleanup.timer
+<p>Then on reboot, select <strong>Velox Linux Snapshots</strong> in GRUB, choose a snapshot, boot into it, and make it permanent:</p>
+<pre><code class="language-bash">sudo snapper -c root rollback
+sudo grub-mkconfig -o /boot/grub/grub.cfg
 </code></pre>
 
 
