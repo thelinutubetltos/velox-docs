@@ -30,11 +30,22 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 ## pacman key errors
 
+GPG keyring errors are one of the most common complaints on Arch Linux and have been since at least 2015. They happen because signing keys expire and new Arch maintainers are added over time — if `archlinux-keyring` hasn't been updated recently, pacman can't verify packages and throws GPG errors.
+
+**Velox fixes this automatically.** The Control Center checks the age of `archlinux-keyring` every time it launches. If it's older than 7 days, it silently refreshes it in the background via `pkexec` — no user action required. A small status line appears in the sidebar:
+
+- **"🔑 Refreshing keyring (Xd old)…"** — while the refresh runs
+- **"✓ Keyring up to date"** in green for 5 seconds, then disappears
+- **Nothing at all** — if the keyring is already fresh
+
+Additionally, the **Update All** button always refreshes `archlinux-keyring` first before running `pacman -Syu` — so updates can never fail on expired keys.
+
+If you hit a keyring error outside of the Control Center, use the **Fix Keyrings** button in the sidebar (Tools section) for a one-click full repair, or run manually:
+
 ```bash
-sudo pacman-key --refresh-keys
+sudo pacman-key --init
 sudo pacman-key --populate archlinux
-sudo pacman -Sy archlinux-keyring
-sudo pacman -Su
+sudo pacman -Sy --noconfirm archlinux-keyring
 ```
 
 ## Broken package database
