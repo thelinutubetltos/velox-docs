@@ -5,10 +5,27 @@ Velox uses Calamares 3.4.2 as its graphical installer, built from the AUR and di
 ## Module sequence
 
 ```
-partition → mount → unpackfs → shellprocess → machineid → locale →
-keyboard → localecfg → fstab → users → shellprocess@post →
-displaymanager → networkcfg → hwclock → services-systemd → umount
+partition → mount → shellprocess@btrfs → unpackfs → shellprocess →
+machineid → locale → keyboard → localecfg → fstab → users →
+shellprocess@post → displaymanager → networkcfg → hwclock →
+services-systemd → umount
 ```
+
+## shellprocess@btrfs — setup-btrfs.sh
+
+Runs `/usr/lib/velox-installer/setup-btrfs.sh` on the **host** (not in chroot) between `mount` and `unpackfs`. Only acts when the root partition is Btrfs — exits immediately on ext4.
+
+**What it does (Btrfs only):**
+
+1. Saves any child mounts (EFI at `/boot/efi`)
+2. Unmounts the raw Btrfs partition from `/tmp/calamares-root`
+3. Creates four subvolumes: `@`, `@home`, `@snapshots`, `@log`
+4. Sets `@` as the Btrfs default subvolume (kernel mounts it without `rootflags`)
+5. Remounts `/tmp/calamares-root` on `@` with `noatime,compress=zstd`
+6. Mounts `@home → /home`, `@snapshots → /.snapshots`, `@log → /var/log`
+7. Restores child mounts (EFI etc.)
+
+unpackfs then unpacks the squashfs into this subvolume layout, putting `/home` content into `@home`, `/var/log` into `@log`, etc.
 
 ## shellprocess — install.sh
 
@@ -18,7 +35,8 @@ Runs `/usr/lib/velox-installer/install.sh` inside the chroot immediately after f
 
 1. Installs and configures GRUB with Velox branding
 2. Detects NVIDIA GPU via `lspci` — if found, installs `nvidia-open-dkms` + utilities
-3. Disables SDDM autologin (removes `User=liveuser` from SDDM config)
+3. Detects Btrfs root — if Btrfs: adds `btrfs` mkinitcpio module, installs `snapper`, writes `/etc/snapper/configs/root`, enables snapshot timers
+4. Disables SDDM autologin (removes `User=liveuser` from SDDM config)
 
 **NVIDIA detection:**
 
@@ -76,8 +94,10 @@ The desktop icon uses `pkexec /usr/bin/calamares-launcher` for manual launch.
 |---|---|
 | `archiso/airootfs/etc/calamares/settings.conf` | Module sequence |
 | `archiso/airootfs/etc/calamares/modules/shellprocess.conf` | install.sh config |
+| `archiso/airootfs/etc/calamares/modules/shellprocess-btrfs.conf` | setup-btrfs.sh config (chroot: false) |
 | `archiso/airootfs/etc/calamares/modules/shellprocess-post.conf` | copy-autostart.sh config |
 | `archiso/airootfs/etc/calamares/branding/velox/branding.desc` | Theme colors |
 | `archiso/airootfs/etc/calamares/branding/velox/stylesheet.qss` | Dark QSS |
 | `archiso/airootfs/usr/lib/velox-installer/install.sh` | Main install script |
+| `archiso/airootfs/usr/lib/velox-installer/setup-btrfs.sh` | Btrfs subvolume setup (runs on host) |
 | `archiso/airootfs/usr/lib/velox-installer/copy-autostart.sh` | Post-install user setup |

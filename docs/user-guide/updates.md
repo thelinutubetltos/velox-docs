@@ -2,13 +2,26 @@
 
 Velox is a rolling release — you get the latest packages continuously, with no version upgrades needed.
 
-## Full system update
+## One-click update via Control Center
+
+Open the Control Center → click **Updates** in the sidebar.
+
+![Velox Control Center Updates](../assets/control center2.png)
+
+The updates page does two things before running:
+
+1. **Checks for available package updates** — lists everything with old and new version numbers
+2. **Fetches the Arch Linux news feed** — shows the last 5 news items live from archlinux.org. Items from the last 14 days are flagged **RECENT** in orange. Some updates require a manual step first — this makes sure you never miss one.
+
+Click **Update All** to run `pacman -Syu` + `flatpak update` together. If there are recent news items, you'll see a warning dialog listing them before the update proceeds.
+
+## Terminal update
 
 ```bash
 sudo pacman -Syu
 ```
 
-This updates packages from all configured repos (official, Chaotic-AUR, velox_repo, nemesis_repo) in one command.
+This updates packages from all configured repos (official, Chaotic-AUR, velox_repo) in one command.
 
 ## Including AUR packages
 
@@ -46,6 +59,8 @@ Take a snapshot first:
 sudo snapper -c root create --description "before update $(date +%Y-%m-%d)"
 sudo pacman -Syu
 ```
+
+Or use Control Center → **Snapshots** to create one with a button click.
 
 ## Mirrors
 
