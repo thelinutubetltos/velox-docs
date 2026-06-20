@@ -30,7 +30,9 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 ## pacman key errors
 
-GPG keyring errors are one of the most common complaints on Arch Linux and have been since at least 2015. They happen because signing keys expire and new Arch maintainers are added over time — if `archlinux-keyring` hasn't been updated recently, pacman can't verify packages and throws GPG errors.
+GPG keyring errors are one of the most frequently recurring support topics on the Arch Linux forums — threads about them have appeared continuously [since at least 2015](https://bbs.archlinux.org/viewtopic.php?id=130138). They happen because the `archlinux-keyring` package holds the signing keys for all official packages, and Arch rotates maintainers and adds new keys over time. If the keyring hasn't been updated recently, pacman can no longer verify packages and throws `invalid or corrupted package (PGP signature)` errors.
+
+This is a design gap that has never been addressed upstream: pacman depends on a keyring it doesn't automatically keep fresh. It's cited as one of the primary reasons new users give up on Arch in [XDA Developers](https://www.xda-developers.com/reasons-never-used-arch-linux-daily-driver/) and the [Framework Community forums](https://community.frame.work/t/why-you-probably-shouldnt-install-arch-linux/74613). Velox fixes it so users never hit this error.
 
 **Velox fixes this automatically.** The Control Center checks the age of `archlinux-keyring` every time it launches. If it's older than 7 days, it silently refreshes it in the background via `pkexec` — no user action required. A small status line appears in the sidebar:
 

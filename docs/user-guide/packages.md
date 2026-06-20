@@ -57,6 +57,12 @@ flatpak uninstall <app.id>          # remove
 
 Every AUR package installed through the Control Center is scanned by `velox-pkgcheck` before installation. It checks for supply-chain attacks, malicious scripts, and known bad maintainers. You'll see a severity rating and can cancel or proceed.
 
+### Why this exists
+
+The AUR is unmoderated — anyone can publish a package. In **July 2025** three AUR packages were found to be actively malicious: `librewolf-fix-bin`, `firefox-patch-bin`, and `zen-browser-patched-bin`. All three ran cryptocurrency miners and exfiltrated user credentials while appearing to be legitimate browser builds. AUR helpers like `paru` and `yay` have no built-in scanning — they download and run whatever PKGBUILD is published.
+
+`velox-pkgcheck` reviews the PKGBUILD before anything is downloaded or built, flagging suspicious patterns so you can make an informed choice.
+
 ## Partial Update Protection
 
 Partial upgrades are one of the most common ways Arch Linux systems break. They happen when you install a new package without first syncing the package database — the new package may depend on a library version that hasn't been installed yet, silently breaking other software.
@@ -74,3 +80,9 @@ You'll have three options:
 | **Cancel** | Does nothing |
 
 Once you've done a full update the database is fresh, so subsequent installs in the same session go through without the dialog.
+
+### Why this exists
+
+The [ArchWiki System Maintenance page](https://wiki.archlinux.org/title/System_maintenance) explicitly states: *"Partial upgrades are unsupported on Arch Linux."* Arch uses rolling, ABI-breaking library updates — installing a package that was built against a newer library than what's on your system can silently corrupt other software or cause immediate crashes.
+
+This exact failure mode is discussed year after year on the Arch Linux Forums ([thread 1](https://bbs.archlinux.org/viewtopic.php?id=298177), [thread 2](https://bbs.archlinux.org/viewtopic.php?id=306427)) and is cited in [XDA Developers](https://www.xda-developers.com/reasons-never-used-arch-linux-daily-driver/) as one of the main reasons Arch breaks for everyday users. Despite being officially unsupported, nothing in the default pacman tooling prevents it — Velox closes that gap.

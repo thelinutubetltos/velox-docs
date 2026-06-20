@@ -13,6 +13,12 @@ The updates page does two things before running:
 1. **Checks for available package updates** — lists everything with old and new version numbers
 2. **Fetches the Arch Linux news feed** — shows the last 5 news items live from archlinux.org. Items from the last 14 days are flagged **RECENT** in orange. Some updates require a manual step first — this makes sure you never miss one.
 
+### Why this exists
+
+The [ArchWiki System Maintenance page](https://wiki.archlinux.org/title/System_maintenance) explicitly states: *"Before upgrading, users are expected to visit the Arch Linux home page to check the latest news."* Arch is a rolling release, and occasionally an update requires a manual intervention step before running `pacman -Syu` — migrating a config file, running a one-off command, or handling a renamed package. The news feed at [archlinux.org/news](https://archlinux.org/news/) is where these are announced.
+
+In practice almost no one checks it, which is why "Arch broke after an update" is a perennial topic on the [Arch Linux Forums](https://bbs.archlinux.org/viewtopic.php?id=298177). The Velox Control Center fetches the live feed and surfaces it directly in the update flow so required steps are never missed.
+
 Click **Update All** to run `pacman -Syu` + `flatpak update` together. If there are recent news items, you'll see a warning dialog listing them before the update proceeds.
 
 ## Terminal update
