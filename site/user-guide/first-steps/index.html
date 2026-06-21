@@ -520,10 +520,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#velox-welcome-tabs" class="md-nav__link">
+  <a href="#velox-control-center" class="md-nav__link">
     <span class="md-ellipsis">
       
-        velox-welcome tabs
+        Velox Control Center
       
     </span>
   </a>
@@ -565,10 +565,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-enable-aur-helper" class="md-nav__link">
+  <a href="#3-install-apps" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Enable AUR helper
+        3. Install apps
       
     </span>
   </a>
@@ -576,10 +576,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#4-toggle-velox-welcome-autostart" class="md-nav__link">
+  <a href="#4-enable-aur-helper" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Toggle velox-welcome autostart
+        4. Enable AUR helper
       
     </span>
   </a>
@@ -1319,10 +1319,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#velox-welcome-tabs" class="md-nav__link">
+  <a href="#velox-control-center" class="md-nav__link">
     <span class="md-ellipsis">
       
-        velox-welcome tabs
+        Velox Control Center
       
     </span>
   </a>
@@ -1364,10 +1364,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-enable-aur-helper" class="md-nav__link">
+  <a href="#3-install-apps" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Enable AUR helper
+        3. Install apps
       
     </span>
   </a>
@@ -1375,10 +1375,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#4-toggle-velox-welcome-autostart" class="md-nav__link">
+  <a href="#4-enable-aur-helper" class="md-nav__link">
     <span class="md-ellipsis">
       
-        4. Toggle velox-welcome autostart
+        4. Enable AUR helper
       
     </span>
   </a>
@@ -1416,71 +1416,74 @@
 <p>On your first login, two things happen automatically:</p>
 <ol>
 <li><strong>Resolution wizard</strong> — a small dialog asks if you want to apply the best detected resolution for your display. Click <strong>Apply</strong> to set it, or <strong>Keep current</strong> to skip. This only appears once.</li>
-<li><strong>Velox Welcome</strong> — the main first-run app opens. Use it to install software, set up snapshots, configure gaming tools, and more.</li>
+<li><strong>Velox Control Center</strong> — opens automatically and asks if you'd like to launch it. Click <strong>Open Control Center</strong> to get started, or <strong>Maybe Later</strong> to dismiss.</li>
 </ol>
-<h2 id="velox-welcome-tabs">velox-welcome tabs</h2>
+<h2 id="velox-control-center">Velox Control Center</h2>
+<p>The Control Center is your one-stop shop for managing your Velox system. It replaces the need for separate package managers, driver installers, and update tools.</p>
+<p><img alt="Velox Control Center Home" src="../../assets/Control%20center1.png" /></p>
 <table>
 <thead>
 <tr>
-<th>Tab</th>
+<th>Section</th>
 <th>What it does</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><strong>First Steps</strong></td>
-<td>Toggle autostart, update system, set appearance, install display drivers, tools</td>
+<td><strong>Home</strong></td>
+<td>Browse and install popular apps by category</td>
 </tr>
 <tr>
-<td><strong>Gaming</strong></td>
-<td>Install Steam, Lutris, Heroic, Bottles, performance tools, Discord</td>
+<td><strong>Installed</strong></td>
+<td>View and remove all installed packages</td>
 </tr>
 <tr>
-<td><strong>Creative</strong></td>
-<td>Kdenlive, OBS, DaVinci Resolve, GIMP, Inkscape, Krita, Blender</td>
+<td><strong>Updates</strong></td>
+<td>One-click system update — shows the Arch Linux news feed first so you never miss a required manual step</td>
 </tr>
 <tr>
-<td><strong>Internet</strong></td>
-<td>Browsers, messaging apps, media players, cloud storage</td>
+<td><strong>Desktops</strong></td>
+<td>Install additional desktop environments</td>
 </tr>
 <tr>
 <td><strong>Kernels</strong></td>
-<td>Switch between standard and performance kernels, update GRUB</td>
+<td>Switch between kernels (linux-velox, linux, linux-lts, linux-zen, linux-hardened, linux-rt)</td>
+</tr>
+<tr>
+<td><strong>GPU Drivers</strong></td>
+<td>Install NVIDIA, AMD, and Intel drivers — auto-detects your GPU</td>
 </tr>
 <tr>
 <td><strong>Snapshots</strong></td>
-<td>Set up Snapper + grub-btrfs for Btrfs snapshot management</td>
+<td>Manage BTRFS snapshots via Snapper</td>
 </tr>
 <tr>
-<td><strong>Packages</strong></td>
-<td>Search and install from pacman, Chaotic-AUR, AUR, and Flatpak</td>
-</tr>
-<tr>
-<td><strong>About</strong></td>
-<td>Project info and links</td>
+<td><strong>Fix Keyrings</strong></td>
+<td>One-click repair for broken pacman GPG keys</td>
 </tr>
 </tbody>
 </table>
 <h2 id="first-things-to-do">First things to do</h2>
 <h3 id="1-update-your-system">1. Update your system</h3>
+<p>Open the Control Center → click <strong>Updates</strong> in the sidebar → click <strong>Update All</strong>.</p>
+<p>The updates page shows the latest Arch Linux news feed. If there are any items flagged as <strong>RECENT</strong> (last 14 days), read them before updating — some require a manual step first.</p>
+<p>Or from the terminal:</p>
 <pre><code class="language-bash">sudo pacman -Syu
 </code></pre>
-<p>Or use the <strong>System Update</strong> button in velox-welcome → First Steps.</p>
 <h3 id="2-check-your-display-drivers">2. Check your display drivers</h3>
 <ul>
 <li><strong>AMD / Intel</strong> — drivers are included, nothing to do.</li>
-<li><strong>NVIDIA</strong> — go to velox-welcome → First Steps → Display Drivers and click <strong>Install NVIDIA</strong>. The installer (<code>install.sh</code>) already detected your GPU and installed <code>nvidia-open-dkms</code> during setup, but verify with:</li>
+<li><strong>NVIDIA</strong> — the Calamares installer already detected your GPU and installed <code>nvidia-open-dkms</code> during setup. Verify with:</li>
 </ul>
 <pre><code class="language-bash">lspci | grep -i nvidia
 nvidia-smi
 </code></pre>
-<h3 id="3-enable-aur-helper">3. Enable AUR helper</h3>
+<p>Or use Control Center → <strong>GPU Drivers</strong> to install additional NVIDIA packages.</p>
+<h3 id="3-install-apps">3. Install apps</h3>
+<p>Use Control Center → <strong>Home</strong> to browse popular apps by category (Browsers, Gaming, Creative, Development, etc.) and install with one click — searches pacman, Chaotic-AUR, AUR, and Flatpak simultaneously.</p>
+<h3 id="4-enable-aur-helper">4. Enable AUR helper</h3>
 <p><code>paru</code> and <code>yay</code> are both pre-installed. <code>paru</code> is the default:</p>
 <pre><code class="language-bash">paru -S &lt;package-name&gt;
-</code></pre>
-<h3 id="4-toggle-velox-welcome-autostart">4. Toggle velox-welcome autostart</h3>
-<p>If you don't want velox-welcome to open on every login, uncheck <strong>Launch at startup</strong> in velox-welcome → First Steps, or delete the autostart file:</p>
-<pre><code class="language-bash">rm ~/.config/autostart/velox-welcome.desktop
 </code></pre>
 
 

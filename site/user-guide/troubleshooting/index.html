@@ -1438,10 +1438,19 @@ sudo reboot
 <pre><code class="language-bash">sudo grub-mkconfig -o /boot/grub/grub.cfg
 </code></pre>
 <h2 id="pacman-key-errors">pacman key errors</h2>
-<pre><code class="language-bash">sudo pacman-key --refresh-keys
+<p>GPG keyring errors are one of the most frequently recurring support topics on the Arch Linux forums — threads about them have appeared continuously <a href="https://bbs.archlinux.org/viewtopic.php?id=130138">since at least 2015</a>. They happen because the <code>archlinux-keyring</code> package holds the signing keys for all official packages, and Arch rotates maintainers and adds new keys over time. If the keyring hasn't been updated recently, pacman can no longer verify packages and throws <code>invalid or corrupted package (PGP signature)</code> errors.</p>
+<p>This is a design gap that has never been addressed upstream: pacman depends on a keyring it doesn't automatically keep fresh. It's cited as one of the primary reasons new users give up on Arch in <a href="https://www.xda-developers.com/reasons-never-used-arch-linux-daily-driver/">XDA Developers</a> and the <a href="https://community.frame.work/t/why-you-probably-shouldnt-install-arch-linux/74613">Framework Community forums</a>. Velox fixes it so users never hit this error.</p>
+<p><strong>Velox fixes this automatically.</strong> The Control Center checks the age of <code>archlinux-keyring</code> every time it launches. If it's older than 7 days, it silently refreshes it in the background via <code>pkexec</code> — no user action required. A small status line appears in the sidebar:</p>
+<ul>
+<li><strong>"🔑 Refreshing keyring (Xd old)…"</strong> — while the refresh runs</li>
+<li><strong>"✓ Keyring up to date"</strong> in green for 5 seconds, then disappears</li>
+<li><strong>Nothing at all</strong> — if the keyring is already fresh</li>
+</ul>
+<p>Additionally, the <strong>Update All</strong> button always refreshes <code>archlinux-keyring</code> first before running <code>pacman -Syu</code> — so updates can never fail on expired keys.</p>
+<p>If you hit a keyring error outside of the Control Center, use the <strong>Fix Keyrings</strong> button in the sidebar (Tools section) for a one-click full repair, or run manually:</p>
+<pre><code class="language-bash">sudo pacman-key --init
 sudo pacman-key --populate archlinux
-sudo pacman -Sy archlinux-keyring
-sudo pacman -Su
+sudo pacman -Sy --noconfirm archlinux-keyring
 </code></pre>
 <h2 id="broken-package-database">Broken package database</h2>
 <pre><code class="language-bash">sudo rm /var/lib/pacman/db.lck     # remove stale lock if pacman crashed

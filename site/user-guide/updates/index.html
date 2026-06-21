@@ -677,10 +677,38 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#full-system-update" class="md-nav__link">
+  <a href="#one-click-update-via-control-center" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Full system update
+        One-click update via Control Center
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="One-click update via Control Center">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-this-exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this exists
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#terminal-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Terminal update
       
     </span>
   </a>
@@ -1302,10 +1330,38 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#full-system-update" class="md-nav__link">
+  <a href="#one-click-update-via-control-center" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Full system update
+        One-click update via Control Center
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="One-click update via Control Center">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-this-exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this exists
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#terminal-update" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Terminal update
       
     </span>
   </a>
@@ -1400,10 +1456,22 @@
 
 <h1 id="system-updates">System Updates</h1>
 <p>Velox is a rolling release — you get the latest packages continuously, with no version upgrades needed.</p>
-<h2 id="full-system-update">Full system update</h2>
+<h2 id="one-click-update-via-control-center">One-click update via Control Center</h2>
+<p>Open the Control Center → click <strong>Updates</strong> in the sidebar.</p>
+<p><img alt="Velox Control Center Updates" src="../../assets/control%20center2.png" /></p>
+<p>The updates page does two things before running:</p>
+<ol>
+<li><strong>Checks for available package updates</strong> — lists everything with old and new version numbers</li>
+<li><strong>Fetches the Arch Linux news feed</strong> — shows the last 5 news items live from archlinux.org. Items from the last 14 days are flagged <strong>RECENT</strong> in orange. Some updates require a manual step first — this makes sure you never miss one.</li>
+</ol>
+<h3 id="why-this-exists">Why this exists</h3>
+<p>The <a href="https://wiki.archlinux.org/title/System_maintenance">ArchWiki System Maintenance page</a> explicitly states: <em>"Before upgrading, users are expected to visit the Arch Linux home page to check the latest news."</em> Arch is a rolling release, and occasionally an update requires a manual intervention step before running <code>pacman -Syu</code> — migrating a config file, running a one-off command, or handling a renamed package. The news feed at <a href="https://archlinux.org/news/">archlinux.org/news</a> is where these are announced.</p>
+<p>In practice almost no one checks it, which is why "Arch broke after an update" is a perennial topic on the <a href="https://bbs.archlinux.org/viewtopic.php?id=298177">Arch Linux Forums</a>. The Velox Control Center fetches the live feed and surfaces it directly in the update flow so required steps are never missed.</p>
+<p>Click <strong>Update All</strong> to run <code>pacman -Syu</code> + <code>flatpak update</code> together. If there are recent news items, you'll see a warning dialog listing them before the update proceeds.</p>
+<h2 id="terminal-update">Terminal update</h2>
 <pre><code class="language-bash">sudo pacman -Syu
 </code></pre>
-<p>This updates packages from all configured repos (official, Chaotic-AUR, velox_repo, nemesis_repo) in one command.</p>
+<p>This updates packages from all configured repos (official, Chaotic-AUR, velox_repo) in one command.</p>
 <h2 id="including-aur-packages">Including AUR packages</h2>
 <pre><code class="language-bash">paru -Syu
 </code></pre>
@@ -1423,6 +1491,7 @@
 <pre><code class="language-bash">sudo snapper -c root create --description &quot;before update $(date +%Y-%m-%d)&quot;
 sudo pacman -Syu
 </code></pre>
+<p>Or use Control Center → <strong>Snapshots</strong> to create one with a button click.</p>
 <h2 id="mirrors">Mirrors</h2>
 <p>Velox uses the standard Arch mirrorlist. To refresh mirrors for the fastest servers:</p>
 <pre><code class="language-bash">sudo reflector --country &quot;United States&quot; --latest 10 --sort rate --save /etc/pacman.d/mirrorlist

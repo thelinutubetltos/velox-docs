@@ -537,6 +537,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#velox-control-center" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Velox Control Center
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#package-sources" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -581,13 +592,58 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#velox-welcome-package-search" class="md-nav__link">
+  <a href="#aur-security" class="md-nav__link">
     <span class="md-ellipsis">
       
-        velox-welcome Package Search
+        AUR Security
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="AUR Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-this-exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this exists
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partial-update-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partial Update Protection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Partial Update Protection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-this-exists_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this exists
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1280,6 +1336,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#velox-control-center" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Velox Control Center
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#package-sources" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1324,13 +1391,58 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#velox-welcome-package-search" class="md-nav__link">
+  <a href="#aur-security" class="md-nav__link">
     <span class="md-ellipsis">
       
-        velox-welcome Package Search
+        AUR Security
       
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="AUR Security">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-this-exists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this exists
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#partial-update-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Partial Update Protection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Partial Update Protection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-this-exists_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this exists
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1355,7 +1467,16 @@
 
 
 <h1 id="package-management">Package Management</h1>
-<p>Velox gives you access to the full Arch package ecosystem: the official repos, Chaotic-AUR, the AUR via <code>paru</code>, and Flatpak.</p>
+<p>Velox gives you access to the full Arch package ecosystem: the official repos, Chaotic-AUR, the AUR via <code>paru</code>, and Flatpak — all in one place through the Velox Control Center.</p>
+<h2 id="velox-control-center">Velox Control Center</h2>
+<p>The easiest way to install software. Search across all sources simultaneously and install with one click — no terminal needed.</p>
+<p><img alt="Velox Control Center Home" src="../../assets/Control%20center1.png" /></p>
+<ul>
+<li><strong>pacman / Chaotic-AUR</strong> — official Arch repos and pre-built AUR packages</li>
+<li><strong>AUR</strong> — community packages, scanned by <code>velox-pkgcheck</code> for supply-chain attacks before installation</li>
+<li><strong>Flatpak</strong> — sandboxed apps from Flathub</li>
+</ul>
+<p>Open it from the taskbar or run <code>velox-control-center</code>.</p>
 <h2 id="package-sources">Package sources</h2>
 <table>
 <thead>
@@ -1369,32 +1490,27 @@
 <tr>
 <td><strong>Official repos</strong> (core, extra, multilib)</td>
 <td>Arch Linux packages</td>
-<td><code>sudo pacman -S &lt;pkg&gt;</code></td>
+<td><code>sudo pacman -S &lt;pkg&gt;</code> or Control Center</td>
 </tr>
 <tr>
 <td><strong>Chaotic-AUR</strong></td>
 <td>Pre-built AUR packages</td>
-<td><code>sudo pacman -S &lt;pkg&gt;</code></td>
+<td><code>sudo pacman -S &lt;pkg&gt;</code> or Control Center</td>
 </tr>
 <tr>
 <td><strong>velox_repo</strong></td>
-<td>Velox packages (kernel, calamares, wallpapers, welcome)</td>
+<td>Velox packages (kernel, control center, wallpapers)</td>
 <td>automatic</td>
-</tr>
-<tr>
-<td><strong>nemesis_repo</strong></td>
-<td>Erik Dubois packages (flameshot-git, pamac-aur, etc.)</td>
-<td><code>sudo pacman -S &lt;pkg&gt;</code></td>
 </tr>
 <tr>
 <td><strong>AUR</strong></td>
 <td>Community source packages</td>
-<td><code>paru -S &lt;pkg&gt;</code></td>
+<td><code>paru -S &lt;pkg&gt;</code> or Control Center</td>
 </tr>
 <tr>
 <td><strong>Flatpak</strong></td>
 <td>Sandboxed apps</td>
-<td><code>flatpak install &lt;app&gt;</code></td>
+<td><code>flatpak install &lt;app&gt;</code> or Control Center</td>
 </tr>
 </tbody>
 </table>
@@ -1418,8 +1534,44 @@ flatpak update                       # update all Flatpaks
 flatpak list                         # list installed
 flatpak uninstall &lt;app.id&gt;          # remove
 </code></pre>
-<h2 id="velox-welcome-package-search">velox-welcome Package Search</h2>
-<p>The <strong>Packages</strong> tab in velox-welcome lets you search across pacman, Chaotic-AUR, AUR, and Flatpak simultaneously and install with one click — no terminal needed.</p>
+<h2 id="aur-security">AUR Security</h2>
+<p>Every AUR package installed through the Control Center is scanned by <code>velox-pkgcheck</code> before installation. It checks for supply-chain attacks, malicious scripts, and known bad maintainers. You'll see a severity rating and can cancel or proceed.</p>
+<h3 id="why-this-exists">Why this exists</h3>
+<p>The AUR is unmoderated — anyone can publish a package. In <strong>July 2025</strong> three AUR packages were found to be actively malicious: <code>librewolf-fix-bin</code>, <code>firefox-patch-bin</code>, and <code>zen-browser-patched-bin</code>. All three ran cryptocurrency miners and exfiltrated user credentials while appearing to be legitimate browser builds. AUR helpers like <code>paru</code> and <code>yay</code> have no built-in scanning — they download and run whatever PKGBUILD is published.</p>
+<p><code>velox-pkgcheck</code> reviews the PKGBUILD before anything is downloaded or built, flagging suspicious patterns so you can make an informed choice.</p>
+<h2 id="partial-update-protection">Partial Update Protection</h2>
+<p>Partial upgrades are one of the most common ways Arch Linux systems break. They happen when you install a new package without first syncing the package database — the new package may depend on a library version that hasn't been installed yet, silently breaking other software.</p>
+<p><strong>Velox prevents this automatically.</strong> Every time you install a pacman package through the Control Center, it checks how long ago the package database was last synced. If it's been more than 1 hour, you'll see a warning:</p>
+<blockquote>
+<p><strong>"Your package database hasn't been synced in X hours. Installing without updating first can cause dependency conflicts."</strong></p>
+</blockquote>
+<p>You'll have three options:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Update System &amp; Install</strong></td>
+<td>Runs <code>pacman -Syu</code> first, then installs — the safe choice</td>
+</tr>
+<tr>
+<td><strong>Install Anyway</strong></td>
+<td>Skips the update and installs directly — use only if you know what you're doing</td>
+</tr>
+<tr>
+<td><strong>Cancel</strong></td>
+<td>Does nothing</td>
+</tr>
+</tbody>
+</table>
+<p>Once you've done a full update the database is fresh, so subsequent installs in the same session go through without the dialog.</p>
+<h3 id="why-this-exists_1">Why this exists</h3>
+<p>The <a href="https://wiki.archlinux.org/title/System_maintenance">ArchWiki System Maintenance page</a> explicitly states: <em>"Partial upgrades are unsupported on Arch Linux."</em> Arch uses rolling, ABI-breaking library updates — installing a package that was built against a newer library than what's on your system can silently corrupt other software or cause immediate crashes.</p>
+<p>This exact failure mode is discussed year after year on the Arch Linux Forums (<a href="https://bbs.archlinux.org/viewtopic.php?id=298177">thread 1</a>, <a href="https://bbs.archlinux.org/viewtopic.php?id=306427">thread 2</a>) and is cited in <a href="https://www.xda-developers.com/reasons-never-used-arch-linux-daily-driver/">XDA Developers</a> as one of the main reasons Arch breaks for everyday users. Despite being officially unsupported, nothing in the default pacman tooling prevents it — Velox closes that gap.</p>
 
 
 

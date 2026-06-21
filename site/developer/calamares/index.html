@@ -1138,6 +1138,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#shellprocessbtrfs-setup-btrfssh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        shellprocess@btrfs — setup-btrfs.sh
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#shellprocess-installsh" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1313,6 +1324,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#shellprocessbtrfs-setup-btrfssh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        shellprocess@btrfs — setup-btrfs.sh
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#shellprocess-installsh" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1401,16 +1423,31 @@
 <h1 id="calamares-installer">Calamares Installer</h1>
 <p>Velox uses Calamares 3.4.2 as its graphical installer, built from the AUR and distributed via the <code>velox-packages</code> GitHub Releases repo.</p>
 <h2 id="module-sequence">Module sequence</h2>
-<pre><code>partition → mount → unpackfs → shellprocess → machineid → locale →
-keyboard → localecfg → fstab → users → shellprocess@post →
-displaymanager → networkcfg → hwclock → services-systemd → umount
+<pre><code>partition → mount → shellprocess@btrfs → unpackfs → shellprocess →
+machineid → locale → keyboard → localecfg → fstab → users →
+shellprocess@post → displaymanager → networkcfg → hwclock →
+services-systemd → umount
 </code></pre>
+<h2 id="shellprocessbtrfs-setup-btrfssh">shellprocess@btrfs — setup-btrfs.sh</h2>
+<p>Runs <code>/usr/lib/velox-installer/setup-btrfs.sh</code> on the <strong>host</strong> (not in chroot) between <code>mount</code> and <code>unpackfs</code>. Only acts when the root partition is Btrfs — exits immediately on ext4.</p>
+<p><strong>What it does (Btrfs only):</strong></p>
+<ol>
+<li>Saves any child mounts (EFI at <code>/boot/efi</code>)</li>
+<li>Unmounts the raw Btrfs partition from <code>/tmp/calamares-root</code></li>
+<li>Creates four subvolumes: <code>@</code>, <code>@home</code>, <code>@snapshots</code>, <code>@log</code></li>
+<li>Sets <code>@</code> as the Btrfs default subvolume (kernel mounts it without <code>rootflags</code>)</li>
+<li>Remounts <code>/tmp/calamares-root</code> on <code>@</code> with <code>noatime,compress=zstd</code></li>
+<li>Mounts <code>@home → /home</code>, <code>@snapshots → /.snapshots</code>, <code>@log → /var/log</code></li>
+<li>Restores child mounts (EFI etc.)</li>
+</ol>
+<p>unpackfs then unpacks the squashfs into this subvolume layout, putting <code>/home</code> content into <code>@home</code>, <code>/var/log</code> into <code>@log</code>, etc.</p>
 <h2 id="shellprocess-installsh">shellprocess — install.sh</h2>
 <p>Runs <code>/usr/lib/velox-installer/install.sh</code> inside the chroot immediately after files are unpacked.</p>
 <p><strong>What it does:</strong></p>
 <ol>
 <li>Installs and configures GRUB with Velox branding</li>
 <li>Detects NVIDIA GPU via <code>lspci</code> — if found, installs <code>nvidia-open-dkms</code> + utilities</li>
+<li>Detects Btrfs root — if Btrfs: adds <code>btrfs</code> mkinitcpio module, installs <code>snapper</code>, writes <code>/etc/snapper/configs/root</code>, enables snapshot timers</li>
 <li>Disables SDDM autologin (removes <code>User=liveuser</code> from SDDM config)</li>
 </ol>
 <p><strong>NVIDIA detection:</strong></p>
@@ -1472,6 +1509,10 @@ fi
 <td>install.sh config</td>
 </tr>
 <tr>
+<td><code>archiso/airootfs/etc/calamares/modules/shellprocess-btrfs.conf</code></td>
+<td>setup-btrfs.sh config (chroot: false)</td>
+</tr>
+<tr>
 <td><code>archiso/airootfs/etc/calamares/modules/shellprocess-post.conf</code></td>
 <td>copy-autostart.sh config</td>
 </tr>
@@ -1486,6 +1527,10 @@ fi
 <tr>
 <td><code>archiso/airootfs/usr/lib/velox-installer/install.sh</code></td>
 <td>Main install script</td>
+</tr>
+<tr>
+<td><code>archiso/airootfs/usr/lib/velox-installer/setup-btrfs.sh</code></td>
+<td>Btrfs subvolume setup (runs on host)</td>
 </tr>
 <tr>
 <td><code>archiso/airootfs/usr/lib/velox-installer/copy-autostart.sh</code></td>
