@@ -34,6 +34,8 @@ extra:
       link: https://github.com/thelinutubetltos
     - icon: fontawesome/brands/youtube
       link: https://youtube.com/@TheLinuxTube
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/htBPZ3Sb
 
 nav:
   - Home: index.md
